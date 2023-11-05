@@ -5,25 +5,25 @@
  * @param TODO param
  * @returns TODO returns
  */
-function tryFn<TFnResult, TCatchResult>(
-  tryFn: () => TFnResult,
+function fnTry<TFnResult, TCatchResult>(
+  fnTry: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult
 ): TFnResult | TCatchResult;
 
-function tryFn<TFnResult, TCatchResult>(
-  tryFn: () => TFnResult,
+function fnTry<TFnResult, TCatchResult>(
+  fnTry: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
-function tryFn<TFnResult, TCatchResult>(
-  tryFn: () => TFnResult,
+function fnTry<TFnResult, TCatchResult>(
+  fnTry: () => TFnResult,
   catchFn: undefined,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
-function tryFn<TFnResult, TCatchResult>(
-  tryFn: (() => TFnResult) | (() => Promise<TFnResult>),
+function fnTry<TFnResult, TCatchResult>(
+  fnTry: (() => TFnResult) | (() => Promise<TFnResult>),
   catchFn?:
     | ((error: unknown) => TCatchResult)
     | ((error: unknown) => Promise<TCatchResult>),
@@ -31,7 +31,7 @@ function tryFn<TFnResult, TCatchResult>(
 ): TFnResult | TCatchResult | Promise<TFnResult | TCatchResult> {
   if (catchFn && finallyFn) {
     try {
-      const resultOrPromise = tryFn();
+      const resultOrPromise = fnTry();
       if (resultOrPromise instanceof Promise) {
         return resultOrPromise.catch(catchFn);
       }
@@ -45,7 +45,7 @@ function tryFn<TFnResult, TCatchResult>(
 
   if (finallyFn) {
     try {
-      const resultOrPromise = tryFn();
+      const resultOrPromise = fnTry();
       if (resultOrPromise instanceof Promise) {
         return resultOrPromise.catch(catchFn);
       }
@@ -60,7 +60,7 @@ function tryFn<TFnResult, TCatchResult>(
   }
 
   try {
-    const resultOrPromise = tryFn();
+    const resultOrPromise = fnTry();
     if (resultOrPromise instanceof Promise) {
       return resultOrPromise.catch(catchFn);
     }
@@ -70,5 +70,5 @@ function tryFn<TFnResult, TCatchResult>(
   }
 }
 
-export { tryFn };
+export { fnTry };
 // TODO export default?
