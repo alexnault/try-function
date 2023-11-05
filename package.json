@@ -1,25 +1,25 @@
 {
-  "name": "try-fn",
+  "name": "fn-try",
   "version": "1.0.0-semantic-release",
   "description": "TODO",
-  "main": "./dist/cjs/try-fn.js",
-  "module": "./dist/esm/try-fn.mjs",
-  "types": "./dist/try-fn.d.ts",
+  "main": "./dist/cjs/fn-try.js",
+  "module": "./dist/esm/fn-try.mjs",
+  "types": "./dist/fn-try.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/try-fn.d.ts",
-      "require": "./dist/cjs/try-fn.js",
-      "import": "./dist/esm/try-fn.mjs"
+      "types": "./dist/fn-try.d.ts",
+      "require": "./dist/cjs/fn-try.js",
+      "import": "./dist/esm/fn-try.mjs"
     },
     "./package.json": "./package.json"
   },
   "author": "Alex Nault",
   "keywords": [
-    "try-fn"
+    "fn-try"
   ],
   "license": "MIT",
-  "repository": "https://github.com/alexnault/try-fn",
-  "homepage": "https://github.com/alexnault/try-fn#readme",
+  "repository": "https://github.com/alexnault/fn-try",
+  "homepage": "https://github.com/alexnault/fn-try#readme",
   "scripts": {
     "build": "rm -rf ./dist && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "format": "prettier ./ --write",

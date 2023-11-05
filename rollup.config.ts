@@ -9,13 +9,13 @@ const config: RollupOptions[] = [
     plugins: [esbuild(), terser()],
     output: [
       {
-        file: `dist/cjs/try-fn.js`,
+        file: `dist/cjs/fn-try.js`,
         format: "cjs",
         exports: "named",
         strict: false, // Don't emit "use strict" in output
       },
       {
-        file: `dist/esm/try-fn.mjs`,
+        file: `dist/esm/fn-try.mjs`,
         format: "es",
       },
     ],
@@ -24,7 +24,7 @@ const config: RollupOptions[] = [
     input: "src/index.ts",
     plugins: [dts()],
     output: {
-      file: `dist/try-fn.d.ts`,
+      file: `dist/fn-try.d.ts`,
       format: "es",
     },
   },
