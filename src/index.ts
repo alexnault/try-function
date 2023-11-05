@@ -6,24 +6,24 @@
  * @returns TODO returns
  */
 function fnTry<TFnResult, TCatchResult>(
-  fnTry: () => TFnResult,
+  tryFn: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult
 ): TFnResult | TCatchResult;
 
 function fnTry<TFnResult, TCatchResult>(
-  fnTry: () => TFnResult,
+  tryFn: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
 function fnTry<TFnResult, TCatchResult>(
-  fnTry: () => TFnResult,
+  tryFn: () => TFnResult,
   catchFn: undefined,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
 function fnTry<TFnResult, TCatchResult>(
-  fnTry: (() => TFnResult) | (() => Promise<TFnResult>),
+  tryFn: (() => TFnResult) | (() => Promise<TFnResult>),
   catchFn?:
     | ((error: unknown) => TCatchResult)
     | ((error: unknown) => Promise<TCatchResult>),
@@ -31,7 +31,7 @@ function fnTry<TFnResult, TCatchResult>(
 ): TFnResult | TCatchResult | Promise<TFnResult | TCatchResult> {
   if (catchFn && finallyFn) {
     try {
-      const resultOrPromise = fnTry();
+      const resultOrPromise = tryFn();
       if (resultOrPromise instanceof Promise) {
         return resultOrPromise.catch(catchFn);
       }
@@ -45,7 +45,7 @@ function fnTry<TFnResult, TCatchResult>(
 
   if (finallyFn) {
     try {
-      const resultOrPromise = fnTry();
+      const resultOrPromise = tryFn();
       if (resultOrPromise instanceof Promise) {
         return resultOrPromise.catch(catchFn);
       }
@@ -60,7 +60,7 @@ function fnTry<TFnResult, TCatchResult>(
   }
 
   try {
-    const resultOrPromise = fnTry();
+    const resultOrPromise = tryFn();
     if (resultOrPromise instanceof Promise) {
       return resultOrPromise.catch(catchFn);
     }
