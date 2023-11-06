@@ -198,4 +198,57 @@ describe("try/catch", () => {
     await expect(promise).rejects.toThrowError("The function failed.");
     expectTypeOf(promise).toEqualTypeOf<Promise<string> | Promise<never>>();
   });
+
+  it("should follow the proper async order", async () => {
+    let order = "1";
+    const result = await fnTry(
+      async () => {
+        order += "2";
+        await sleep(10);
+        order += "3";
+        throw new Error("The function failed.");
+      },
+      async () => {
+        order += "4";
+        await sleep(10);
+        order += "5";
+        return 1;
+      }
+    );
+
+    order += "6";
+
+    expect(order).toBe("123456");
+    expect(result).toBe(1);
+    expectTypeOf(result).toEqualTypeOf<number>();
+  });
+
+  it("should follow the proper async order", async () => {
+    let order = "1";
+    const promise = fnTry(
+      async () => {
+        order += "2";
+        await sleep(10);
+        order += "3";
+        throw new Error("The function failed.");
+        // return 1;
+      },
+      async () => {
+        order += "4";
+        await sleep(10);
+        order += "5";
+        return 1;
+      }
+    );
+
+    order += "6";
+
+    expectTypeOf(promise).toEqualTypeOf<Promise<number> | Promise<never>>();
+
+    await promise.then((result) => {
+      expect(order).toBe("126345");
+      expect(result).toBe(1);
+      expectTypeOf(result).toEqualTypeOf<number>();
+    });
+  });
 });
