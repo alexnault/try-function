@@ -5,24 +5,24 @@
  * @param TODO param
  * @returns TODO returns
  */
-function fnTry<TFnResult, TCatchResult>(
+function tryFn<TFnResult, TCatchResult>(
   tryFn: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult
 ): TFnResult | TCatchResult;
 
-function fnTry<TFnResult, TCatchResult>(
+function tryFn<TFnResult, TCatchResult>(
   tryFn: () => TFnResult,
   catchFn: (error: unknown) => TCatchResult,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
-function fnTry<TFnResult, TCatchResult>(
+function tryFn<TFnResult, TCatchResult>(
   tryFn: () => TFnResult,
   catchFn: undefined,
   finallyFn: () => void
 ): TFnResult | TCatchResult;
 
-function fnTry<TFnResult, TCatchResult>(
+function tryFn<TFnResult, TCatchResult>(
   tryFn: (() => TFnResult) | (() => Promise<TFnResult>),
   catchFn?:
     | ((error: unknown) => TCatchResult)
@@ -70,5 +70,5 @@ function fnTry<TFnResult, TCatchResult>(
   }
 }
 
-export { fnTry };
+export { tryFn };
 // TODO export default?

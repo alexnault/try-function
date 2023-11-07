@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { describe, it, expect, expectTypeOf } from "vitest";
 
-import { fnTry } from "../src";
+import { tryFn } from "../src";
 import {
   willThrowAsync,
   willThrow,
@@ -12,7 +12,7 @@ import {
 
 describe("try/catch", () => {
   it("should have proper return types", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willPass("success"),
       () => "failed"
     );
@@ -21,7 +21,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willPass("success"),
       () => 1
     );
@@ -30,7 +30,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => {},
       () => {}
     );
@@ -39,7 +39,7 @@ describe("try/catch", () => {
   });
 
   it("should return the function value on success", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willPass("success"),
       (error) => {
         throw error;
@@ -50,7 +50,7 @@ describe("try/catch", () => {
   });
 
   it("should return the catch value on error", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willThrow("success"),
       () => "fail"
     );
@@ -59,7 +59,7 @@ describe("try/catch", () => {
   });
 
   it("should return the undefined catch value on error", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willThrow("success"),
       () => {}
     );
@@ -69,7 +69,7 @@ describe("try/catch", () => {
 
   it("should throw an error on error", () => {
     const wrapper = () =>
-      fnTry(
+      tryFn(
         () => willThrow("success"),
         (error) => {
           throw error;
@@ -81,7 +81,7 @@ describe("try/catch", () => {
 
   // Async
   it("should return the value async", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willPassAsync("success"),
       (error) => {
         throw error;
@@ -93,7 +93,7 @@ describe("try/catch", () => {
 
   it("should have both return types", async () => {
     const wrapper = () =>
-      fnTry(
+      tryFn(
         async () => "success",
         () => 1
       );
@@ -102,7 +102,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", () => {
-    const result = fnTry(
+    const result = tryFn(
       () => willPass("success"),
       async () => {
         await sleep(1);
@@ -114,7 +114,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => {},
       async () => {}
     );
@@ -123,7 +123,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willPassAsync("success"),
       async () => {}
     );
@@ -132,7 +132,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willPassAsync("success"),
       async (error) => {
         await sleep(1);
@@ -144,7 +144,7 @@ describe("try/catch", () => {
   });
 
   it("should have both return types", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willPassAsync("success"),
       async () => {
         await sleep(1);
@@ -156,7 +156,7 @@ describe("try/catch", () => {
   });
 
   it("should return the value async", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willThrowAsync("success"),
       () => "fail"
     );
@@ -165,7 +165,7 @@ describe("try/catch", () => {
   });
 
   it("should throw an error on error", async () => {
-    const result = await fnTry(
+    const result = await tryFn(
       async () => willThrowAsync("success"),
       async () => {
         await sleep(1);
@@ -177,7 +177,7 @@ describe("try/catch", () => {
   });
 
   it("should throw an error on error", async () => {
-    const promise = fnTry(
+    const promise = tryFn(
       async () => willThrowAsync("success"),
       (error) => {
         throw error;
@@ -188,7 +188,7 @@ describe("try/catch", () => {
   });
 
   it("should throw an error on error", async () => {
-    const promise = fnTry(
+    const promise = tryFn(
       async () => willThrowAsync("success"),
       async (error) => {
         await sleep(1);
@@ -201,7 +201,7 @@ describe("try/catch", () => {
 
   it("should follow the proper async order", async () => {
     let order = "1";
-    const result = await fnTry(
+    const result = await tryFn(
       async () => {
         order += "2";
         await sleep(10);
@@ -225,7 +225,7 @@ describe("try/catch", () => {
 
   it("should follow the proper async order", async () => {
     let order = "1";
-    const promise = fnTry(
+    const promise = tryFn(
       async () => {
         order += "2";
         await sleep(10);
