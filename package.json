@@ -1,6 +1,6 @@
 {
   "name": "try-function",
-  "version": "1.0.0-semantic-release",
+  "version": "0.1.0",
   "description": "TODO",
   "main": "./dist/cjs/try-function.js",
   "module": "./dist/esm/try-function.mjs",
