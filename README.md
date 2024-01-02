@@ -1,9 +1,37 @@
 # try-function
 
 ![NPM version](https://img.shields.io/npm/v/try-function?style=flat-square)
-![Build](https://img.shields.io/github/actions/workflow/status/alexnault/try-function/ci-and-publish.yml?branch=main&style=flat-square)
 ![Test coverage](https://img.shields.io/codecov/c/github/alexnault/try-function?style=flat-square)
 ![Size](https://img.shields.io/badge/dynamic/json?color=blue&label=size&query=$.size.uncompressedSize&url=https://deno.bundlejs.com?q=try-function&style=flat-square)
+
+A tiny utility for using `const` with `try/catch` blocks and get automatic typing.
+
+In other word, `try-function` converts this:
+
+```ts
+let integer: number | undefined;
+try {
+  integer = parseInt("7");
+} catch (error) {
+  console.log(error);
+}
+```
+
+... to this:
+
+```ts
+import { tryFn } from "try-function";
+
+const integer = tryFn(() => parseInt("7"), console.log);
+```
+
+## Highlights
+
+- Avoids re-assignments (no need for `let`)
+- Automatic Typescript typing
+- Supports `try`, `catch`, and `finally` blocks
+- Supports `async` functions
+- No dependencies
 
 ## Installation
 
@@ -11,37 +39,27 @@
 npm install try-function
 ```
 
-## Usage
+## Example
 
-Convert this:
-
-```ts
-let payload: string | undefined;
-try {
-  payload = decode("abc123");
-} catch (error) {
-  // ...
-}
-```
-
-... to this:
+Here's an advanced example showcasing all features (`try/catch/finally` in a async format):
 
 ```ts
-const payload = tryFn(
-  () => decode("abc123"),
-  (error) => {
-    // ...
+import { tryFn } from "try-function";
+
+const text = await tryFn(
+  async () => {
+    const text = await readFile("file.txt");
+    return text;
+  },
+  async (error) => {
+    await log("An error occured: ", error);
+    return "Error";
+  },
+  async () => {
+    await log("Operation completed.");
   }
 );
 ```
-
-- Functional with no re-assignement (no need for `let`)
-- Less error-prone
-- Automatic typing (no need to define `result`'s type)
-- Supports `async` functions out-of-the-box
-- Supports `finally` blocks
-- No dependencies
-- Fully tested
 
 ## Changelog
 
