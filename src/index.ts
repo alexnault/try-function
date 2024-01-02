@@ -71,4 +71,3 @@ function tryFn<TFnResult, TCatchResult>(
 }
 
 export { tryFn };
-// TODO export default?
